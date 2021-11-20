@@ -1,0 +1,42 @@
+## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/WP
+    platform: postgres
+    initialization-mode: always
+    continue-on-error: true
+    liquibase:
+    change-log: classpath:liquibase/master.xml
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false;
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+#         dialect: org.hibernate.dialect.PostgreSQL95Dialect
+
+  queries:
+    users-query: select email, password, active from users where email=?
+    roles-query: select email, role from users where email=?
+server:
+  servlet:
+    contextPath: /api
+
+jwtSecret: com.dmaksimn
+jwtExpiration: 86400
+
+---
+spring:
+  config:
+    activate:
+      on-profile: ehcache
+  cache:
+    jcache:
+      config: classpath:ehcache.xml

@@ -1,0 +1,19 @@
+version: '2'
+services:
+  db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  backend:
+    build: server/.
+    ports: 
+      - "8080:8080"
+    depends_on:
+      - db
+  frontend:
+    build: ui/.
+    ports: 
+      - "80:80"
+    depends_on: 
+      - server
